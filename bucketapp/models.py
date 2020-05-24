@@ -1,3 +1,17 @@
 from django.db import models
 
-# Create your models here.
+
+class BucketList(models.Model):
+    """Create Bucket List Model"""
+    name = models.CharField(max_length=200, blank=False, null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        """String representation of model object"""
+        return "{}".format(self.name)
+
+    class Meta:
+        """Verbose name and verbose name plural"""
+        verbose_name = "Bucket List"
+        verbose_name_plural = "Bucket List"
