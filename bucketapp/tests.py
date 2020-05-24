@@ -48,7 +48,7 @@ class ViewTestCase(TestCase):
         bucket_list = BucketList.objects.get()
         change_bucket = {"name": "Bike ride"}
         res = self.client.put(
-            reverse("update-bucket", kwargs={"pk": bucket_list.id}
+            reverse("details-bucket", kwargs={"pk": bucket_list.id}
         ), change_bucket, format="json")
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
@@ -56,7 +56,7 @@ class ViewTestCase(TestCase):
         """Test api for delete bucket list"""
         bucket_list = BucketList.objects.get()
         response = self.client.delete(
-            reverse("delete-bucket", kwargs={"pk": bucket_list.id}),
+            reverse("details-bucket", kwargs={"pk": bucket_list.id}),
             format="json", follow=True
         )
         self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
