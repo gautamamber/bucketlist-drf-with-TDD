@@ -33,3 +33,30 @@ class ViewTestCase(TestCase):
     def test_api_create_bucket_list(self):
         """Test api for bucket list creation"""
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+    def test_api_get_bucket_list(self):
+        """Test the api can get a given a bucket list"""
+        bucket_list = BucketList.objects.get()
+        response = self.client.get(reverse('details-bucket', kwargs={
+            'pk': bucket_list.id
+        }), format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, bucket_list)
+
+    def test_api_update_bucket_list(self):
+        """Test api for bucket update"""
+        bucket_list = BucketList.objects.get()
+        change_bucket = {"name": "Bike ride"}
+        res = self.client.put(
+            reverse("update-bucket", kwargs={"pk": bucket_list.id}
+        ), change_bucket, format="json")
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_delete_bucket_list(self):
+        """Test api for delete bucket list"""
+        bucket_list = BucketList.objects.get()
+        response = self.client.delete(
+            reverse("delete-bucket", kwargs={"pk": bucket_list.id}),
+            format="json", follow=True
+        )
+        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
