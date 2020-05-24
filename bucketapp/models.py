@@ -6,10 +6,11 @@ class BucketList(models.Model):
     name = models.CharField(max_length=200, blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    owner = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="bucketlists", null=True)
 
     def __str__(self):
         """String representation of model object"""
-        return "{}".format(self.name)
+        return "{}-{}".format(self.name, self.owner)
 
     class Meta:
         """Verbose name and verbose name plural"""
