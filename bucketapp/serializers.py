@@ -7,4 +7,4 @@ class BucketListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.BucketList
-        fields = ('name',)
+        fields = "__all__"
