@@ -3,6 +3,7 @@ from .models import BucketList
 from rest_framework.test import APIClient
 from django.urls import reverse
 from rest_framework import status
+from django.contrib.auth.models import User
 
 
 class ModelTestCase(TestCase):
@@ -10,8 +11,9 @@ class ModelTestCase(TestCase):
 
     def setUp(self):
         """Defines the test client and set up the database"""
+        user = User.objects.create(username="amber gautam")
         self.bucket_list_name = "My bucket List"
-        self.bucket_list = BucketList(name=self.bucket_list_name)
+        self.bucket_list = BucketList(name=self.bucket_list_name, owner=user)
 
     def test_model_bucket_list(self):
         """Test the bucket list model can create a bucket"""
@@ -26,8 +28,9 @@ class ViewTestCase(TestCase):
 
     def setUp(self):
         """Define the test client and other test variables"""
+        user = User.objects.create(username="amber gautam")
         self.client = APIClient()
-        self.bucket_list_data = {"name": "Bike Riding"}
+        self.bucket_list_data = {"name": "Bike Riding", "owner": user.id}
         self.response = self.client.post(reverse('create'), self.bucket_list_data, format="json")
 
     def test_api_create_bucket_list(self):
